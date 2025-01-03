@@ -1,5 +1,10 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'db.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +81,7 @@ include 'db.php';
         <div class="col-md-6">
             <div class="card" id="register-form">
                 <div class="card-body">
-                    <h2 class="card-title">Register</h2>
+                    <h2 class="card-title my-3">Register</h2>
                     <form action="register.php" method="POST">
                         <div class="mb-3">
                             <label for="register-username" class="form-label">Username</label>
@@ -90,6 +95,19 @@ include 'db.php';
                             <label for="register-password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="register-password" name="password" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="register-retype-password" class="form-label">Verify password</label>
+                            <input type="password" class="form-control" id="register-retype-password" name="retype-password" required>
+                        </div>
+                        <?php
+                        if (isset($_SESSION['register-error'])) {
+                            echo '<div class="alert alert-danger"">' . $_SESSION['register-error'] . '</div>';
+                            unset($_SESSION['register-error']);
+                        } elseif (isset($_SESSION['login-error'])) {
+                            echo '<div class="alert alert-danger"">' . $_SESSION['login-error'] . '</div>';
+                            unset($_SESSION['login-error']);
+                        }
+                        ?>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </form>
                     <p class="mt-3">Already have an account? <a href="#" id="show-login">Login here</a></p>
