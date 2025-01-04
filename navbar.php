@@ -1,8 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand mx-5" href="#">Appointment Management</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <a class="navbar-brand mx-5" href="dashboard.php">Appointment Management</a>
+    <div class="mx-5">
+        <?php echo 'Current Time: ' . date('l, F j, Y'); ?> - <span id="clock"></span>
+    </div>
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            document.getElementById('clock').innerHTML = strTime;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call
+    </script>
     <div class="collapse navbar-collapse d-flex justify-content-end mx-5" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
