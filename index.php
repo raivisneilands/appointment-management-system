@@ -88,6 +88,10 @@ include 'db.php';
                             <input type="text" class="form-control" id="register-username" name="username" required>
                         </div>
                         <div class="mb-3">
+                            <label for="register-name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="register-name" name="name" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="register-email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="register-email" name="email" required>
                         </div>
