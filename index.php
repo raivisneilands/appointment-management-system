@@ -71,15 +71,14 @@ include 'db.php';
 
 <body>
     <div class="container my-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="row w-100"></div>
-        <div class="col-md-6 d-flex align-items-center">
+        <div class="col-md-6">
             <div>
                 <h1 class="display-4">Welcome to the Appointment Management System</h1>
                 <p class="lead">Manage your appointments efficiently and effortlessly. Register now to get started or login to access your dashboard.</p>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card" id="register-form">
+            <div class="card m-5" id="register-form">
                 <div class="card-body">
                     <h2 class="card-title my-3">Register</h2>
                     <form action="register.php" method="POST">

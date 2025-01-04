@@ -17,35 +17,9 @@ include 'db.php';
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand mx-5" href="#">Appointment Management</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex justify-content-end mx-5" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Appointments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <form action="logout.php" method="post">
-                        <button type="submit" class="btn btn-danger">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <h2 class="display-6 m-4">Welcome to your dashboard, <?php echo $_SESSION['name']; ?>!</h2>
+    <?php include 'navbar.php'; ?>
     <div class="container mt-5">
+        <h2 class="display-6 my-5">Welcome to your dashboard, <?php echo $_SESSION['name']; ?>!</h2>
         <div class="row">
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">
@@ -59,7 +33,7 @@ include 'db.php';
                             echo $row['total'];
                             ?>
                         </h5>
-                        <p class="card-text">You have <?php echo $row['total']; ?> appointments scheduled.</p>
+                        <p class="card-text">You have <?php echo $row['total']; ?> appointments scheduled or pending approval.</p>
                     </div>
                 </div>
             </div>
@@ -98,29 +72,32 @@ include 'db.php';
         </div>
         <div class="row mt-4">
             <div class="col-md-12">
-                <h3>Upcoming Appointments</h3>
-                <table class="table table-striped">
+                <?php
+                // Fetch recent appointments from the database
+                $stmt = $pdo->query("SELECT * FROM appointments where user_id = {$_SESSION['user-id']} and status = 'upcoming' ORDER BY time LIMIT 5");
+                if ($stmt->rowCount() > 0) {
+                    echo '
+                    <h3 class="display-6">Upcoming Appointments</h3>
+                    <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th scope="col">Date and Time</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Status</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Date and Time</th>
+                        <th scope="col">Title</th>
+                    </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        // Fetch recent appointments from the database
-                        $stmt = $pdo->query("SELECT * FROM appointments where user_id = {$_SESSION['user-id']} ORDER BY time LIMIT 5");
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<tr>";
-                            echo "<td>" . $row['time'] . "</td>";
-                            echo "<td>" . $row['title'] . "</td>";
-                            echo "<td>" . $row['status'] . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                    <tbody>';
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td>" . $row['time'] . "</td>";
+                        echo "<td>" . $row['title'] . "</td>";
+                        echo "</tr>";
+                    }
+                    echo '</tbody>
+                </table>';
+                } else {
+                    echo '<p class="display-6 my-4">You have no upcoming appointments.</p>';
+                }
+                ?>
             </div>
         </div>
     </div>

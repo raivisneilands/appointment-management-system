@@ -32,5 +32,6 @@ if ($userExists) {
     $user_id = $stmt->fetch();
     $_SESSION['user-id'] = $user_id['id'];
     $_SESSION['name'] = $_POST['name'];
+    $_SESSION['loggedin'] = true;
     header('Location: dashboard.php');
 }
