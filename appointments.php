@@ -40,6 +40,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Date and Time</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -48,14 +49,23 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo htmlspecialchars($row['title']); ?></td>
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
                     <td><?php echo htmlspecialchars($row['time']); ?></td>
+                    <td><?php echo htmlspecialchars($row['status']); ?></td>
                     <td class="d-flex">
+                        <form action="complete_appointment.php" method="post">
+                            <input type="hidden" name="complete-appointment-id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="btn btn-success btn-sm mx-3">Complete</button>
+                        </form>
                         <form action="edit_appointment.php" method="post">
                             <input type="hidden" name="edit-appointment-id" value="<?php echo $row['id']; ?>">
                             <button type="submit" class="btn btn-secondary btn-sm mx-3">Edit</button>
                         </form>
+                        <form action="cancel_appointment.php" method="post">
+                            <input type="hidden" name="cancel-appointment-id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="btn btn-danger btn-sm mx-3">Cancel appointment</button>
+                        </form>
                         <form action="delete_appointment.php" method="post">
                             <input type="hidden" name="appointment_id" value="<?php echo $row['id']; ?>">
-                            <button type="submit" class="btn btn-danger btn-sm mx-3">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm mx-3">Remove</button>
                         </form>
                     </td>
                 </tr>
