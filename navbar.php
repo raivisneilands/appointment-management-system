@@ -1,3 +1,13 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['user-id'])) {
+    header('Location: index.php');
+    $_SESSION['login-error'] = 'You need to login first!';
+    exit();
+}
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand mx-5" href="dashboard.php">Appointment Management</a>
     <div class="mx-5">

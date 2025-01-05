@@ -1,7 +1,11 @@
 <?php
 // Include database connection file
 include "db.php";
-
+if (!isset($_SESSION['user-id'])) {
+    $_SESSION['login-error'] = 'You neded to login first!';
+    header('Location: index.php');
+    exit();
+}
 // Fetch appointment data based on ID
 try {
     if (isset($_POST['edit-appointment-id'])) {

@@ -1,5 +1,13 @@
 <?php
 include 'db.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['user-id'])) {
+    $_SESSION['login-error'] = 'You need to login first!';
+    header('Location: index.php');
+    exit();
+}
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = filter_var($_POST['title'], FILTER_SANITIZE_SPECIAL_CHARS);

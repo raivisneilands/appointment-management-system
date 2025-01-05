@@ -2,6 +2,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if (!isset($_SESSION['user-id'])) {
+    header('Location: index.php');
+    $_SESSION['login-error'] = 'You need to login first!';
+    exit();
+}
 // Database connection
 include 'db.php';
 

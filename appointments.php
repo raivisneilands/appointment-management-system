@@ -6,7 +6,8 @@ if (session_status() == PHP_SESSION_NONE) {
 include 'db.php';
 
 if (!isset($_SESSION['user-id'])) {
-    header('Location: login.php');
+    $_SESSION['login-error'] = 'You need to login first!';
+    header('Location: index.php');
     exit();
 }
 
